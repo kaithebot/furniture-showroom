@@ -1,48 +1,15 @@
 // New Era Furniture - Interactive Features
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Header scroll effect
-    const header = document.querySelector('.header');
-    
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-    });
-
     // Mobile menu toggle
-    const navToggle = document.querySelector('.nav-toggle');
-    const navMenu = document.querySelector('.nav-menu');
+    const menuToggle = document.querySelector('.mobile-menu-toggle');
+    const navLinks = document.querySelector('.nav-links');
     
-    navToggle.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        
-        // Animate hamburger
-        const spans = navToggle.querySelectorAll('span');
-        if (navMenu.classList.contains('active')) {
-            spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-            spans[1].style.opacity = '0';
-            spans[2].style.transform = 'rotate(-45deg) translate(7px, -6px)';
-        } else {
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        }
-    });
-
-    // Close mobile menu when clicking a link
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-            navMenu.classList.remove('active');
-            const spans = navToggle.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
         });
-    });
+    }
 
     // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -50,12 +17,9 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                const headerHeight = header.offsetHeight;
-                const targetPosition = target.offsetTop - headerHeight;
-                
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
                 });
             }
         });
@@ -63,9 +27,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Scroll reveal animation
     const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
     };
 
     const observer = new IntersectionObserver(function(entries) {
@@ -77,40 +40,88 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Observe product cards and feature cards
-    const cards = document.querySelectorAll('.product-card, .feature-card');
-    cards.forEach(card => {
+    // Animate product cards
+    document.querySelectorAll('.product-card').forEach((card, index) => {
         card.style.opacity = '0';
         card.style.transform = 'translateY(20px)';
-        card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+        card.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
         observer.observe(card);
     });
 
-    // WhatsApp button tracking
-    const whatsappButtons = document.querySelectorAll('a[href^="https://wa.me"]');
-    whatsappButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            console.log('WhatsApp button clicked:', this.href);
+    // Header shadow on scroll
+    const header = document.querySelector('.header');
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 50) {
+            header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.3)';
+        } else {
+            header.style.boxShadow = 'none';
+        }
+    });
+
+    // Product Modal Functionality
+    const modal = document.getElementById('product-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalWhatsapp = document.getElementById('modal-whatsapp');
+    const closeModal = document.querySelector('.close-modal');
+
+    // Add click event to all product cards
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function(e) {
+            // Don't open modal if clicking the WhatsApp button
+            if (e.target.classList.contains('btn-whatsapp')) return;
+            
+            const img = this.querySelector('img').src;
+            const title = this.querySelector('h3').textContent;
+            const desc = this.querySelector('p').textContent;
+            const whatsappLink = this.querySelector('.btn-whatsapp').href;
+            
+            modalImg.src = img;
+            modalTitle.textContent = title;
+            modalDesc.textContent = desc;
+            modalWhatsapp.href = whatsappLink;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         });
     });
 
-    // Lazy loading images
-    if ('IntersectionObserver' in window) {
-        const imageObserver = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const img = entry.target;
-                    img.src = img.dataset.src || img.src;
-                    img.classList.remove('lazy');
-                    imageObserver.unobserve(img);
-                }
-            });
-        });
-
-        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
-            imageObserver.observe(img);
+    // Close modal
+    if (closeModal) {
+        closeModal.addEventListener('click', function() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
         });
     }
 
+    // Close modal on outside click
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Track WhatsApp clicks
+    document.querySelectorAll('a[href^="https://wa.me"]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            console.log('WhatsApp order initiated:', this.closest('.product-card')?.querySelector('h3')?.textContent || 'General inquiry');
+        });
+    });
+
     console.log('✨ New Era Furniture website loaded successfully!');
+    console.log('📱 WhatsApp ordering enabled');
+    console.log('🖼️ Product modals active');
 });
