@@ -164,3 +164,6 @@ function createProductCard(product) {
 console.log('✨ New Era Furniture App loaded! 150+ products ready.');
 console.log('📱 WhatsApp ordering enabled');
 console.log('🖼️ Product tabs and pagination active');
+
+// Add loaded class to body to show content (removes opacity: 0)
+document.body.classList.add('loaded');
