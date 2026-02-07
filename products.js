@@ -171,6 +171,7 @@ furnitureCatalog.consoleTables = [
   { id: "CT-003", name: "A-C12 Paros Console", price: "$549", image: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=600", category: "Console Tables" },
   { id: "CT-004", name: "A-C14 Adora Console", price: "$699", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600", category: "Console Tables" },
   { id: "CT-005", name: "A-C16 Aster Console", price: "$599", image: "https://images.unsplash.com/photo-1499933374294-4584851497cc?w=600", category: "Console Tables" }
-];
+]
+};
 
 // Total count: 135 + 10 + 5 = 150 products
