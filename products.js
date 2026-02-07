@@ -145,13 +145,9 @@ const furnitureCatalog = {
     { id: "DR-023", name: "D8125 Perseus Dining Set", price: "$1,899", image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600", category: "Dining Sets" },
     { id: "DR-024", name: "D1375 Hydra Dining Set", price: "$1,999", image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600", category: "Dining Sets" },
     { id: "DR-025", name: "D1450 Orion Dining Set", price: "$2,199", image: "https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600", category: "Dining Sets" }
-  ]
-};
-
-// Total products: 40 + 30 + 40 + 25 = 135 products
-// Adding more to reach 150+
-
-furnitureCatalog.mattresses = [
+  ],
+  
+  mattresses: [
   { id: "MA-001", name: "Jupiter 11.5\" Gel Foam", price: "$899", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600", category: "Mattresses" },
   { id: "MA-002", name: "Ecoflex 11\" Gel Foam", price: "$799", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600", category: "Mattresses" },
   { id: "MA-003", name: "Twilight Firm 12\"", price: "$999", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600", category: "Mattresses" },
@@ -162,16 +158,15 @@ furnitureCatalog.mattresses = [
   { id: "MA-008", name: "M250 Elite Gel 14\" Hybrid", price: "$1,499", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600", category: "Mattresses" },
   { id: "MA-009", name: "M450 Supreme 15\" Hybrid", price: "$1,899", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600", category: "Mattresses" },
   { id: "MA-010", name: "M350 Ultra 12\" Memory Foam", price: "$1,199", image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=600", category: "Mattresses" }
-];
-
-// Console tables
-furnitureCatalog.consoleTables = [
+  ],
+  
+  consoleTables: [
   { id: "CT-001", name: "A-C07 Bianca Console", price: "$499", image: "https://images.unsplash.com/photo-1499933374294-4584851497cc?w=600", category: "Console Tables" },
   { id: "CT-002", name: "A-C11 Salma Console", price: "$599", image: "https://images.unsplash.com/photo-1558997519-83ea9252edf8?w=600", category: "Console Tables" },
   { id: "CT-003", name: "A-C12 Paros Console", price: "$549", image: "https://images.unsplash.com/photo-1533090481720-856c6e3c1fdc?w=600", category: "Console Tables" },
   { id: "CT-004", name: "A-C14 Adora Console", price: "$699", image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600", category: "Console Tables" },
   { id: "CT-005", name: "A-C16 Aster Console", price: "$599", image: "https://images.unsplash.com/photo-1499933374294-4584851497cc?w=600", category: "Console Tables" }
-]
+  ]
 };
 
 // Total count: 135 + 10 + 5 = 150 products
