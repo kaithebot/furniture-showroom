@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scroll
+    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
@@ -58,5 +58,124 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    console.log('✨ New Era Furniture website loaded!');
+    // Product Modal Functionality
+    const modal = document.getElementById('product-modal');
+    const modalImg = document.getElementById('modal-img');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDesc = document.getElementById('modal-desc');
+    const modalWhatsapp = document.getElementById('modal-whatsapp');
+    const closeModal = document.querySelector('.close-modal');
+
+    // Add click event to all product cards
+    document.querySelectorAll('.product-card').forEach(card => {
+        card.style.cursor = 'pointer';
+        card.addEventListener('click', function(e) {
+            // Don't open modal if clicking the WhatsApp button
+            if (e.target.classList.contains('btn-whatsapp')) return;
+            
+            const img = this.querySelector('img').src;
+            const title = this.querySelector('h3').textContent;
+            const desc = this.querySelector('p').textContent;
+            const whatsappLink = this.querySelector('.btn-whatsapp').href;
+            
+            modalImg.src = img;
+            modalTitle.textContent = title;
+            modalDesc.textContent = desc;
+            modalWhatsapp.href = whatsappLink;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    // Close modal
+    if (closeModal) {
+        closeModal.addEventListener('click', function() {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+
+    // Close modal on outside click
+    if (modal) {
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+
+    // Close modal on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Track WhatsApp clicks
+    document.querySelectorAll('a[href^="https://wa.me"]').forEach(btn => {
+        btn.addEventListener('click', function() {
+            console.log('WhatsApp order initiated:', this.closest('.product-card')?.querySelector('h3')?.textContent || 'General inquiry');
+        });
+    });
+
+    console.log('✨ New Era Furniture website loaded successfully!');
+    console.log('📱 WhatsApp ordering enabled');
+    console.log('🖼️ Product modals active');
 });
+
+// Active navigation highlighting
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+        if (scrollY >= sectionTop - 200) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+            link.classList.add('active');
+        }
+    });
+});
+
+// Loading animation
+window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+});
+
+// Scroll to top button
+const scrollTopBtn = document.createElement('button');
+scrollTopBtn.className = 'scroll-top';
+scrollTopBtn.innerHTML = '↑';
+scrollTopBtn.setAttribute('aria-label', 'Scroll to top');
+document.body.appendChild(scrollTopBtn);
+
+scrollTopBtn.addEventListener('click', () => {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+});
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+        scrollTopBtn.classList.add('visible');
+    } else {
+        scrollTopBtn.classList.remove('visible');
+    }
+});
+
+// Log completion
+console.log('🎉 New Era Furniture website fully loaded!');
+console.log('📱 WhatsApp: (713) 808-9064');
+console.log('🛋️ 19 products ready for viewing');
